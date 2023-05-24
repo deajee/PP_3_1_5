@@ -32,11 +32,11 @@ public class DataBaseInitializer {
         roleRepository.save(adminRole);
         roleRepository.save(userRole);
 
-        User adminUser = new User("admin", encoder.encode("admin"));
+        User adminUser = new User("admin", "admin", (byte) 23, "admin@mail.ru", encoder.encode("admin"));
         adminUser.setRoles(Set.of(adminRole, userRole));
         userRepository.save(adminUser);
 
-        User regularUser = new User("user", encoder.encode("user"));
+        User regularUser = new User("user", "user", (byte) 17, "user@mail.ru", encoder.encode("user"));
         regularUser.setRoles(Set.of(userRole));
         userRepository.save(regularUser);
     }

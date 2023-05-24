@@ -8,10 +8,25 @@
 <body>
 <form action="#" th:action="@{/admin}" th:object="${user}" method="post">
     <div>
-        <label for="username">Name</label>
-        <input name="username" type="text" id="username"/>
+        <label for="name">Name</label>
+        <input name="name" type="text" id="name"/>
 
-        <br/>
+        <br>
+
+        <label for="lastName">Lastname</label>
+        <input name="lastName" type="text" id="lastName"/>
+
+        <br>
+
+        <label for="age">Age</label>
+        <input name="age" type="number" id="age"/>
+
+        <br>
+
+        <label for="email">Email</label>
+        <input name="email" type="text" id="email"/>
+
+        <br>
 
         <label for="password">Password</label>
         <input name="password" type="text" id="password"/>
@@ -23,7 +38,7 @@
         <br>
 
         <select multiple name="roles" id="roles">
-            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
         </select>
 
         <br>

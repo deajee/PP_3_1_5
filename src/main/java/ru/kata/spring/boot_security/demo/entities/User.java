@@ -17,8 +17,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String lastName;
+    private Byte age;
     @Column(unique = true)
-    private String username;
+    private String email;
     private String password;
     @Fetch(FetchMode.JOIN)
     @ManyToMany
@@ -31,9 +34,36 @@ public class User implements UserDetails {
         this.roles = new HashSet<>();
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String name, String lastName, Byte age, String email, String password) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Byte getAge() {
+        return age;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
     }
 
     public Long getId() {
@@ -45,11 +75,11 @@ public class User implements UserDetails {
     }
 
     public String getUsername() {
-        return username;
+        return email;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setUsername(String email) {
+        this.email = email;
     }
 
     @Override

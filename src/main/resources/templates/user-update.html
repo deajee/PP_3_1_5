@@ -10,16 +10,32 @@
 <form action="#" th:action="@{/admin/user-update}" th:object="${user}" method="post">
     <div>
         <label for="id">ID</label>
-        <input name="id" type="number" id="id" readonly="readonly" th:value="${user.id}"/>
+        <input name="id" type="number" id="id" readonly="readonly" th:value="${user.getId()}"/>
 
-        <br/>
-        <label for="username">Name</label>
-        <input name="username" type="text" id="username" th:value="${user.username}"/>
+        <br>
+
+        <label for="name">Name</label>
+        <input name="name" type="text" id="name" th:value="${user.getName()}"/>
+
+        <br>
+
+        <label for="lastName">Lastname</label>
+        <input name="lastName" type="text" id="lastName" th:value="${user.getLastName()}"/>
+
+        <br>
+
+        <label for="age">Age</label>
+        <input name="age" type="number" id="age" th:value="${user.getAge()}"/>
+
+        <br>
+
+        <label for="email">Email</label>
+        <input name="email" type="text" id="email" th:value="${user.getUsername()}"/>
 
         <br>
 
         <label for="password">Password</label>
-        <input name="password" type="text" id="password" th:value="${user.password}"/>
+        <input name="password" type="text" id="password" th:value="${user.getPassword()}"/>
 
         <br>
 
@@ -28,7 +44,7 @@
         <br>
 
         <select multiple name="roles" id="roles">
-            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
         </select>
 
         <input type="hidden" name="_method" value="PATCH"/>
