@@ -12,13 +12,19 @@
     <table>
         <tr>
             <th>ID</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Age</th>
             <th>Email</th>
             <th>Password</th>
         </tr>
         <tr>
-            <td th:text="${currentUser.id}"></td>
-            <td th:text="${currentUser.email}"></td>
-            <td th:text="${currentUser.password}"></td>
+            <td th:text="${currentUser.getId()}"></td>
+            <td th:text="${currentUser.getName()}"></td>
+            <td th:text="${currentUser.getLastName()}"></td>
+            <td th:text="${currentUser.getAge()}"></td>
+            <td th:text="${currentUser.getUsername()}"></td>
+            <td th:text="${currentUser.getPassword()}"></td>
         </tr>
     </table>
 </div>
