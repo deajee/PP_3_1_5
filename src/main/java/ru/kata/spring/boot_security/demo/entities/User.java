@@ -6,6 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,11 +21,20 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Field cannot be empty")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format")
     private String name;
+    @NotEmpty(message = "Field cannot be empty")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format")
     private String lastName;
+    @NotNull(message = "Field cannot be empty")
+    @Min(value = 12, message = "Age must be above 12.")
     private Byte age;
     @Column(unique = true)
-    private String email;
+    @NotEmpty(message = "Field cannot be empty")
+    @Pattern(regexp = ".+@.+\\..+", message = "Wrong format")
+    private String username;
+    @NotEmpty(message = "Field cannot be empty")
     private String password;
     @Fetch(FetchMode.JOIN)
     @ManyToMany
@@ -34,11 +47,11 @@ public class User implements UserDetails {
         this.roles = new HashSet<>();
     }
 
-    public User(String name, String lastName, Byte age, String email, String password) {
+    public User(String name, String lastName, Byte age, String username, String password) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -75,11 +88,11 @@ public class User implements UserDetails {
     }
 
     public String getUsername() {
-        return email;
+        return username;
     }
 
-    public void setUsername(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

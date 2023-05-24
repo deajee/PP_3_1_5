@@ -3,10 +3,13 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -38,7 +41,11 @@ public class AdminController {
     }
 
     @PostMapping
-    public String addUser(User user) {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user-create";
+        }
+
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -57,7 +64,11 @@ public class AdminController {
     }
 
     @PatchMapping("/user-update")
-    public String updateUser(User user) {
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user-update";
+        }
+
         userService.saveUser(user);
         return "redirect:/admin";
     }
