@@ -24,17 +24,17 @@ public class User implements UserDetails {
     @NotEmpty(message = "Field cannot be empty")
     @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format")
     private String name;
-    @NotEmpty(message = "Field cannot be empty")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format")
+    /*@NotEmpty(message = "Field cannot be empty")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format")*/
     private String lastName;
-    @NotNull(message = "Field cannot be empty")
-    @Min(value = 12, message = "Age must be above 12.")
+    /*@NotNull(message = "Field cannot be empty")
+    @Min(value = 12, message = "Age must be above 12.")*/
     private Byte age;
     @Column(unique = true)
-    @NotEmpty(message = "Field cannot be empty")
-    @Pattern(regexp = ".+@.+\\..+", message = "Wrong format")
+    /*@NotEmpty(message = "Field cannot be empty")
+    @Pattern(regexp = ".+@.+\\..+", message = "Wrong format")*/
     private String username;
-    @NotEmpty(message = "Field cannot be empty")
+    /*@NotEmpty(message = "Field cannot be empty")*/
     private String password;
     @Fetch(FetchMode.JOIN)
     @ManyToMany

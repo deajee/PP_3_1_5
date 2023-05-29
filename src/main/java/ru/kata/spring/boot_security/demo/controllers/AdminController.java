@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,13 +31,19 @@ public class AdminController {
     }
 
     @GetMapping
-    public String printUsers(Model model) {
+    public String printUsers(Model model, @ModelAttribute("newUser") User newUser, Principal principal) {
+        User authenticatedUser = userService.findByUsername(principal.getName());
+        model.addAttribute("authenticatedUser", authenticatedUser);
+        model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "user-list";
     }
 
     @GetMapping("/user-create")
-    public String createUserForm(Model model) {
+    public String createUserForm(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("currentUser", userService.findByUsername(userDetails.getUsername()));
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("user", new User());
         return "user-create";
@@ -56,18 +65,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/user-update/{id}")
-    public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userService.findById(id));
-        return "user-update";
-    }
-
-    @PatchMapping("/user-update")
-    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "user-update";
-        }
+    @PatchMapping("/user-update/{id}")
+    public String updateUser(@ModelAttribute("user") User user) {
+        /*if (bindingResult.hasErrors()) {
+            return "user-list";
+        }*/
 
         userService.saveUser(user);
         return "redirect:/admin";

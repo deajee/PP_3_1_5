@@ -16,12 +16,13 @@ public class DataBaseInitializer {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public DataBaseInitializer(UserRepository userRepository, RoleRepository roleRepository) {
+    public DataBaseInitializer(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
     @PostConstruct
