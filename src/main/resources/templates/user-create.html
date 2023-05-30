@@ -93,23 +93,42 @@
                                     <div class="mb-3">
                                         <label for="name" class="form-label fw-bold">First name</label>
                                         <input type="text" class="form-control col-4 mx-auto" id="name" th:field="*{name}"/>
-                                        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                                        <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                                            <span th:each="error : ${#fields.errors('name')}"
+                                            th:text="${error}"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="lastName" class="form-label fw-bold">Last name</label>
-                                        <input type="text" class="form-control col-4 mx-auto" id="lastName" name="lastName">
+                                        <input type="text" class="form-control col-4 mx-auto" id="lastName" th:field="*{lastName}">
+                                        <div th:if="${#fields.hasErrors('lastName')}" class="text-danger">
+                                            <span th:each="error : ${#fields.errors('lastName')}"
+                                                  th:text="${error}"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="age" class="form-label fw-bold">Age</label>
-                                        <input type="number" class="form-control col-4 mx-auto" id="age" name="age">
+                                        <input type="number" class="form-control col-4 mx-auto" id="age" th:field="*{age}">
+                                        <div th:if="${#fields.hasErrors('age')}" class="text-danger">
+                                            <span th:each="error : ${#fields.errors('age')}"
+                                                  th:text="${error}"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label fw-bold">Email</label>
-                                        <input type="text" class="form-control col-4 mx-auto" id="username" name="username">
+                                        <input type="text" class="form-control col-4 mx-auto" id="username" th:field="*{username}">
+                                        <div th:if="${#fields.hasErrors('username')}" class="text-danger">
+                                            <span th:each="error : ${#fields.errors('username')}"
+                                                  th:text="${error}"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label fw-bold">Password</label>
-                                        <input type="text" class="form-control col-4 mx-auto" id="password" name="password">
+                                        <input type="text" class="form-control col-4 mx-auto" id="password" th:field="*{password}">
+                                        <div th:if="${#fields.hasErrors('password')}" class="text-danger">
+                                            <span th:each="error : ${#fields.errors('password')}"
+                                                  th:text="${error}"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="role" class="form-label fw-bold">Role</label>

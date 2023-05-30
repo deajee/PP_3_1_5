@@ -52,10 +52,9 @@ public class AdminController {
     }
 
     @PostMapping
-    public String addUser(@Valid @ModelAttribute("user") User user,
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
                           @ModelAttribute("currentUser") User currentUser,
-                          @ModelAttribute("roles") List<Role> roles,
-                          BindingResult bindingResult) {
+                          @ModelAttribute("roles") List<Role> roles) {
         if (bindingResult.hasErrors()) {
             return "user-create";
         }
@@ -71,10 +70,11 @@ public class AdminController {
     }
 
     @PatchMapping("/user-update/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        /*if (bindingResult.hasErrors()) {
-            return "user-list";
-        }*/
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            //return "user-list";
+            return "redirect:/admin";
+        }
 
         userService.saveUser(user);
         return "redirect:/admin";
