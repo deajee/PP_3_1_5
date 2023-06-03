@@ -27,11 +27,28 @@ function addUser() {
                 password: formNew.password.value,
                 roles: newUserRoles
             })
-        }).then(() => {
-            formNew.reset();
-            tableOfAllUsers();
-            $('#home-tab').click();
+        }).then(response => {
+            if (response.ok) {
+                formNew.reset();
+                tableOfAllUsers();
+                $('#home-tab').click();
+            } else {
+                response.json().then(errors => {
+                    displayAddErrors(errors);
+                });
+            }
         });
+    });
+}
+
+function displayAddErrors(errors) {
+    let errorAddDiv = document.getElementById("errorAddDiv");
+    errorAddDiv.innerHTML = "";
+    errors.forEach(error => {
+        let errorSpan = document.createElement("span");
+        errorSpan.className = "error-message";
+        errorSpan.innerHTML = error;
+        errorAddDiv.appendChild(errorSpan);
     });
 }
 
