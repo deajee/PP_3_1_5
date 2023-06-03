@@ -47,14 +47,22 @@ function editUser() {
 
 
 function displayEditErrors(errors) {
-    let errorEditDiv = document.getElementById("errorEditDiv");
-    errorEditDiv.innerHTML = "";
-    errors.forEach(error => {
-        let errorSpan = document.createElement("span");
-        errorSpan.className = "error-message";
-        errorSpan.innerHTML = error;
-        errorEditDiv.appendChild(errorSpan);
-    });
+    try {
+        let errorEditDiv = document.getElementById("errorEditDiv");
+        errorEditDiv.innerHTML = "";
+        errors.forEach(error => {
+            let errorSpan = document.createElement("span");
+            errorSpan.className = "error-message";
+            errorSpan.innerHTML = error;
+            errorEditDiv.appendChild(errorSpan);
+        });
+    } catch (e) {
+        if (e instanceof TypeError) {
+            console.log('Ошибка TypeError: ', e.message);
+            $('#editFormCloseButton').click();
+            tableOfAllUsers();
+        }
+    }
 }
 
 function loadRoles() {
