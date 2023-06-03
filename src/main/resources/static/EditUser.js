@@ -24,10 +24,10 @@ function editUser() {
             },
             body: JSON.stringify({
                 id: formEdit.id.value,
-                username: formEdit.username.value,
+                name: formEdit.name.value,
                 lastName: formEdit.lastName.value,
                 age: formEdit.age.value,
-                email: formEdit.email.value,
+                username: formEdit.username.value,
                 password: formEdit.password.value,
                 roles: editUserRoles
             })
