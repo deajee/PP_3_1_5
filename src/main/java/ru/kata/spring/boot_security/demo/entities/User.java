@@ -19,11 +19,9 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @NotEmpty(message = "Field cannot be empty ")
     @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format ")

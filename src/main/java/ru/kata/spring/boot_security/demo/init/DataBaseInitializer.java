@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Configuration
 public class DataBaseInitializer {
-
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder encoder;
