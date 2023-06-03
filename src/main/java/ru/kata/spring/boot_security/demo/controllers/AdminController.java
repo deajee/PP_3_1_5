@@ -70,7 +70,18 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long id,
+                                        @RequestBody @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getAllErrors().stream()
+                    .map(error -> error instanceof FieldError ?
+                            ((FieldError) error).getField() + ": " + error.getDefaultMessage() :
+                            error.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         userService.update(id, user);
         return ResponseEntity.ok(user);
     }

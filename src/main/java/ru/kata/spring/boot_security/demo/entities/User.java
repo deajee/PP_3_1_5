@@ -41,8 +41,6 @@ public class User implements UserDetails {
     @NotEmpty(message = "Field cannot be empty ")
     @Pattern(regexp = ".+@.+\\..+", message = "Wrong format ")
     private String username;
-
-    @NotEmpty(message = "Field cannot be empty ")
     private String password;
 
     @Fetch(FetchMode.JOIN)

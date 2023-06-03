@@ -31,10 +31,29 @@ function editUser() {
                 password: formEdit.password.value,
                 roles: editUserRoles
             })
-        }).then(() => {
-            $('#editFormCloseButton').click();
-            tableOfAllUsers();
+        }).then(response => {
+            if (response.ok) {
+                $('#editFormCloseButton').click();
+                tableOfAllUsers();
+            } else {
+                response.json().then(errors => {
+                    displayEditErrors(errors);
+                });
+            }
         });
+    });
+}
+
+
+
+function displayEditErrors(errors) {
+    let errorEditDiv = document.getElementById("errorEditDiv");
+    errorEditDiv.innerHTML = "";
+    errors.forEach(error => {
+        let errorSpan = document.createElement("span");
+        errorSpan.className = "error-message";
+        errorSpan.innerHTML = error;
+        errorEditDiv.appendChild(errorSpan);
     });
 }
 
