@@ -41,6 +41,5 @@ public class DataBaseInitializer {
         regularUser.setRoles(Set.of(userRole));
         userRepository.save(regularUser);
     }
-
 }
 

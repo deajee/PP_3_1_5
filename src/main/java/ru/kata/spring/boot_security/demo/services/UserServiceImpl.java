@@ -19,20 +19,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-    }
-
-    @Autowired
-    public void setPasswordEncoder(@Lazy PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /*@Override
-    public void updateUser(User updatedUser) {
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        userRepository.save(updatedUser);
-    }*/
+    @Override
+    public void update(Long id, User updateUser) {
+        updateUser.setId(id);
+        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        userRepository.save(updateUser);
+    }
 
     @Transactional(readOnly = true)
     @Override

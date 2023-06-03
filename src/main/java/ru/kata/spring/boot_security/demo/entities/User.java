@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.entities;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -23,24 +25,24 @@ public class User implements UserDetails {
     private Long id;
 
 
-    @NotEmpty(message = "Field cannot be empty ")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format ")
+    /*@NotEmpty(message = "Field cannot be empty ")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format ")*/
     private String name;
 
-    @NotEmpty(message = "Field cannot be empty ")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format ")
+    /*@NotEmpty(message = "Field cannot be empty ")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Wrong format ")*/
     private String lastName;
 
-    @NotNull(message = "Field cannot be empty ")
-    @Min(value = 12, message = "Age must be above 12 ")
+    /*@NotNull(message = "Field cannot be empty ")
+    @Min(value = 12, message = "Age must be above 12 ")*/
     private Byte age;
 
     @Column(unique = true)
-    @NotEmpty(message = "Field cannot be empty ")
-    @Pattern(regexp = ".+@.+\\..+", message = "Wrong format ")
+    /*@NotEmpty(message = "Field cannot be empty ")
+    @Pattern(regexp = ".+@.+\\..+", message = "Wrong format ")*/
     private String username;
 
-    @NotEmpty(message = "Field cannot be empty ")
+   /* @NotEmpty(message = "Field cannot be empty ")*/
     private String password;
 
     @Fetch(FetchMode.JOIN)
@@ -60,6 +62,15 @@ public class User implements UserDetails {
         this.age = age;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String name, String lastName, Byte age, String username, String password, Set<Role> roles) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 
     public String getName() {
@@ -104,7 +115,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        //return roles;
+        return roles.stream().map(role ->
+                new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
     }
 
     public String getPassword() {
@@ -137,6 +150,10 @@ public class User implements UserDetails {
 
     public Collection<Role> getRoles() {
         return roles;
+    }
+
+    public String getShortRole() {
+        return roles.toString().substring(1, roles.toString().length() - 1);
     }
 
     public void setRoles(Set<Role> roles) {
